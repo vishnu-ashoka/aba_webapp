@@ -9,21 +9,18 @@ const initapp = () => {
     onePointer.addEventListener("click", (event) => {
         onepointerscript();
         resetTheTimer();
-        startTimer();
         running=true;
     })
     const twoPointer = document.getElementById("2_pointer");
     twoPointer.addEventListener("click", (event) => {
         twopointerscript();
         resetTheTimer();
-        startTimer();
         running=true;
     })
     const threePointer = document.getElementById("3_pointer");
     threePointer.addEventListener("click", (event) => {
         threepointerscript();
         resetTheTimer();
-        startTimer();
         running=true;
     })
     const timeout = document.getElementById("time_out");
@@ -38,12 +35,21 @@ const initapp = () => {
         if (running == true){
             return; // already running
         }
-        else:
+        else{
             startTimer();
+        }
     })
-    const stopClock = document.getElementById("stopclock");
+    const stopClock = document.getElementById("stop_clock");
     stopClock.addEventListener("click", (event) => {
+        console.log("stop");
+        running=false;
         stopTimer();
+    })
+    const shotClock = document.getElementById("shot_clock");
+    shotClock.addEventListener("click", (event) => {
+        resetTheTimer();
+        startTimer();
+        running=false;
     })
 }
 
@@ -52,18 +58,28 @@ const resetTheTimer = () => {
     var deciseconds = document.getElementById("deciseconds");
     seconds.value = 14;
     deciseconds.value = 0.0;
+    stopClock();
 }
 
 const startTimer = () => {
+    internal_breaksequence=false;
     var seconds = document.getElementById("seconds");
     var deciseconds = document.getElementById("deciseconds");
     var secs = seconds.value;
     var decisecs = secs*10 + 1;
     function timer(){
+        if (running=false){
+            internal_breaksequence=true;
+            return;
+        }
         setTimeout(secondsdecrement, 1000);
         decitimer();
     }
     function secondsdecrement(){
+        if (internal_breaksequence){
+            return;
+        }
+
         secs--;
         seconds.value = secs;
         if (secs==0){
@@ -75,6 +91,9 @@ const startTimer = () => {
         setTimeout(decisecondsdecrement ,100);
     }
     function decisecondsdecrement() {
+        if (internal_breaksequence){
+            return;
+        }
         decisecs--;
         console.log(secs, decisecs-((Math.floor(decisecs/10))*10));
         deciseconds.value = decisecs-((Math.floor(decisecs/10))*10);
@@ -83,12 +102,18 @@ const startTimer = () => {
         }
         decitimer();
     }
-    
     timer();
+    // what happens when timer = 0
+    timeOutScript(); //?
 }
 
 const stopTimer = () => {
-    
+    var seconds = document.getElementById("seconds");
+    var deciseconds = document.getElementById("deciseconds");
+    var secs = seconds.value;
+    var decisecs = deciseconds.value;
+    seconds.value = secs;
+    deciseconds.value = decisecs;
 }
 
 const onepointerscript = () => {console.log("blue");}
