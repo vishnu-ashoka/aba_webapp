@@ -3,30 +3,24 @@ document.addEventListener("readystatechange", (event) => {
         initapp();
     }
 })
-var color;
-export {color};
-
+var running;
 const initapp = () => {
-    
     const onePointer = document.getElementById("1_pointer");
     onePointer.addEventListener("click", (event) => {
         running=false;
-        color = [0,0,0];
-        loadscript(colour_signal.js);
+        loadscript("/js/onepointer_signal.js");
         resetTheTimer();
     })
     const twoPointer = document.getElementById("2_pointer");
     twoPointer.addEventListener("click", (event) => {
         running=false;
-        color = [0,0,0];
-        loadscript(colour_signal.js);
+        loadscript("/js/twopointer_signal.js");
         resetTheTimer();
     })
     const threePointer = document.getElementById("3_pointer");
     threePointer.addEventListener("click", (event) => {
         running=false;
-        color = [0,0,0];
-        loadscript(colour_signal.js);
+        loadscript("/js/threepointer_signal.js");
         resetTheTimer();
     })
     const timeout = document.getElementById("time_out");
@@ -131,6 +125,6 @@ function loadscript(src){
 }
 
 function timeoutScript(){
-    color = [0,0,0];
-    loadscript(colour_signal.js);
+    color = [255,0,255];
+    loadscript("/js/timeout_signal.js");
 }
