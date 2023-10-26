@@ -36,6 +36,7 @@ const initapp = () => {
             return; // already running
         }
         else{
+            running = true;
             startTimer();
         }
     })
@@ -47,9 +48,10 @@ const initapp = () => {
     })
     const shotClock = document.getElementById("shot_clock");
     shotClock.addEventListener("click", (event) => {
+        stopTimer();
         resetTheTimer();
         startTimer();
-        running=false;
+        running=true;
     })
 }
 
@@ -58,49 +60,36 @@ const resetTheTimer = () => {
     var deciseconds = document.getElementById("deciseconds");
     seconds.value = 14;
     deciseconds.value = 0.0;
-    stopClock();
+    stopTimer();
 }
 
 const startTimer = () => {
-    internal_breaksequence=false;
     var seconds = document.getElementById("seconds");
     var deciseconds = document.getElementById("deciseconds");
     var secs = seconds.value;
-    var decisecs = secs*10 + 1;
+    var decisecs = secs*10 + 10;
+    var secdec;
+    var dsecdec;
     function timer(){
-        if (running=false){
-            internal_breaksequence=true;
-            return;
-        }
-        setTimeout(secondsdecrement, 1000);
-        decitimer();
+        secdec = setInterval(secondsdecrement, 1000);
+        dsecdec = setInterval(decisecondsdecrement, 100);
+
     }
     function secondsdecrement(){
-        if (internal_breaksequence){
-            return;
-        }
-
         secs--;
         seconds.value = secs;
-        if (secs==0){
-            return;
-        }
-        timer();
-    }
-    function decitimer(){
-        setTimeout(decisecondsdecrement ,100);
+        
     }
     function decisecondsdecrement() {
-        if (internal_breaksequence){
-            return;
-        }
         decisecs--;
-        console.log(secs, decisecs-((Math.floor(decisecs/10))*10));
+        console.log(secs, decisecs);
         deciseconds.value = decisecs-((Math.floor(decisecs/10))*10);
-        if (deciseconds.value==0){
-            return;
+        if (decisecs==0 || running==false){
+            clearInterval(dsecdec);
+            clearInterval(secdec);
+            seconds.value = 0;
+            deciseconds.value = 0;
         }
-        decitimer();
     }
     timer();
     // what happens when timer = 0
@@ -108,6 +97,7 @@ const startTimer = () => {
 }
 
 const stopTimer = () => {
+    running=false
     var seconds = document.getElementById("seconds");
     var deciseconds = document.getElementById("deciseconds");
     var secs = seconds.value;

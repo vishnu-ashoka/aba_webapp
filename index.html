@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABA webapp</title>
 </head>
-
+<link rel="stylesheet" href="style.css">
 <body onload="">
     <main>
-        <button id="1_pointer" class="button" tabindex="0">1 pointer</button>
-        <button id="2_pointer" class="button" tabindex="0">2 pointer</button>
-        <button id="3_pointer" class="button" tabindex="0">3 pointer</button>
-        <button id="time_out" class="button" tabindex="0">Time out</button>
-        <br>
-        <button id="start_clock" class="button" tabindex="0">Start clock</button>
-        <button id="stop_clock" class="button" tabindex="0">Stop clock</button>
-        <button id="shot_clock" class="button" tabindex="0">Shot clock</button>
-        <br>
-        Seconds:<input id="seconds" type="text">
-        Deciseconds:<input id="deciseconds" type="text">
+        <div class = "pointerbuttons">
+            <button id="1_pointer" class="button" tabindex="0">1 pointer</button>
+            <button id="2_pointer" class="button" tabindex="0">2 pointer</button>
+            <button id="3_pointer" class="button" tabindex="0">3 pointer</button>
+            <button id="time_out" class="button" tabindex="0">Time out</button>
+        </div>
+        <div class = "timercontrol">
+            <button id="start_clock" class="button" tabindex="0">Start clock</button>
+            <button id="stop_clock" class="button" tabindex="0">Stop clock</button>
+            <button id="shot_clock" class="button" tabindex="0">Shot clock</button>
+        </div>
+        <div class = "timer">
+            Seconds:<input id="seconds" type="text">
+            Deciseconds:<input id="deciseconds" type="text">
+        </div>
     </main>
 </body><script src="/js/main.js"></script>
 </html>
