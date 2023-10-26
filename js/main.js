@@ -7,27 +7,28 @@ document.addEventListener("readystatechange", (event) => {
 const initapp = () => {
     const onePointer = document.getElementById("1_pointer");
     onePointer.addEventListener("click", (event) => {
+        running=false;
         onepointerscript();
         resetTheTimer();
-        running=true;
     })
     const twoPointer = document.getElementById("2_pointer");
     twoPointer.addEventListener("click", (event) => {
+        running=false;
         twopointerscript();
         resetTheTimer();
-        running=true;
     })
     const threePointer = document.getElementById("3_pointer");
     threePointer.addEventListener("click", (event) => {
+        running=false;
         threepointerscript();
         resetTheTimer();
-        running=true;
     })
     const timeout = document.getElementById("time_out");
     timeout.addEventListener("click", (event) => {
+        running=false;
         timeOutScript();
         resetTheTimer();
-        running=false;
+        
     })
     const startClock = document.getElementById("start_clock");
     startClock.addEventListener("click", (event) => {
@@ -48,6 +49,7 @@ const initapp = () => {
     })
     const shotClock = document.getElementById("shot_clock");
     shotClock.addEventListener("click", (event) => {
+        running=false;
         stopTimer();
         resetTheTimer();
         startTimer();
@@ -56,18 +58,24 @@ const initapp = () => {
 }
 
 const resetTheTimer = () => {
+    stopTimer();
     var seconds = document.getElementById("seconds");
     var deciseconds = document.getElementById("deciseconds");
     seconds.value = 14;
     deciseconds.value = 0.0;
-    stopTimer();
+    
 }
 
 const startTimer = () => {
     var seconds = document.getElementById("seconds");
     var deciseconds = document.getElementById("deciseconds");
     var secs = seconds.value;
-    var decisecs = secs*10 + 10;
+    if (secs==14){
+        secs -= 1;
+    }
+    var decisecs = secs*10 ;
+    seconds.value = secs
+    deciseconds.value = decisecs-((Math.floor(decisecs/10))*10);
     var secdec;
     var dsecdec;
     function timer(){
@@ -84,11 +92,15 @@ const startTimer = () => {
         decisecs--;
         console.log(secs, decisecs);
         deciseconds.value = decisecs-((Math.floor(decisecs/10))*10);
-        if (decisecs==0 || running==false){
+        if (decisecs==0){
             clearInterval(dsecdec);
             clearInterval(secdec);
             seconds.value = 0;
             deciseconds.value = 0;
+        }
+        if (running==false){
+            clearInterval(dsecdec);
+            clearInterval(secdec);
         }
     }
     timer();
