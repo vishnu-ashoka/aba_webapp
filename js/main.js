@@ -3,30 +3,36 @@ document.addEventListener("readystatechange", (event) => {
         initapp();
     }
 })
+var color;
+export {color};
 
 const initapp = () => {
+    
     const onePointer = document.getElementById("1_pointer");
     onePointer.addEventListener("click", (event) => {
         running=false;
-        onepointerscript();
+        color = [0,0,0];
+        loadscript(colour_signal.js);
         resetTheTimer();
     })
     const twoPointer = document.getElementById("2_pointer");
     twoPointer.addEventListener("click", (event) => {
         running=false;
-        twopointerscript();
+        color = [0,0,0];
+        loadscript(colour_signal.js);
         resetTheTimer();
     })
     const threePointer = document.getElementById("3_pointer");
     threePointer.addEventListener("click", (event) => {
         running=false;
-        threepointerscript();
+        color = [0,0,0];
+        loadscript(colour_signal.js);
         resetTheTimer();
     })
     const timeout = document.getElementById("time_out");
     timeout.addEventListener("click", (event) => {
         running=false;
-        timeOutScript();
+        timeoutScript();
         resetTheTimer();
         
     })
@@ -97,6 +103,7 @@ const startTimer = () => {
             clearInterval(secdec);
             seconds.value = 0;
             deciseconds.value = 0;
+            timeoutScript();
         }
         if (running==false){
             clearInterval(dsecdec);
@@ -105,7 +112,7 @@ const startTimer = () => {
     }
     timer();
     // what happens when timer = 0
-    timeOutScript(); //?
+     //?
 }
 
 const stopTimer = () => {
@@ -117,8 +124,13 @@ const stopTimer = () => {
     seconds.value = secs;
     deciseconds.value = decisecs;
 }
+function loadscript(src){
+    const script = document.createElement('script');
+    script.src = src;
+    document.head.prepend(script);
+}
 
-const onepointerscript = () => {console.log("blue");}
-const twopointerscript = () => {console.log("pink");}
-const threepointerscript = () => {console.log("green");}
-const timeOutScript = () => {console.log("red")}
+function timeoutScript(){
+    color = [0,0,0];
+    loadscript(colour_signal.js);
+}
