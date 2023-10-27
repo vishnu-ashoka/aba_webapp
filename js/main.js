@@ -3,25 +3,30 @@ document.addEventListener("readystatechange", (event) => {
         initapp();
     }
 })
-var running;
+/*import { signal } from "./color_signal.js";*/
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+    var running;    
+
 const initapp = () => {
     const onePointer = document.getElementById("1_pointer");
     onePointer.addEventListener("click", (event) => {
-        running=false;
-        loadscript("/js/onepointer_signal.js");
         resetTheTimer();
+        running = true;
+        sleep(1000).then(() => {startTimer();})
     })
     const twoPointer = document.getElementById("2_pointer");
     twoPointer.addEventListener("click", (event) => {
-        running=false;
-        loadscript("/js/twopointer_signal.js");
         resetTheTimer();
+        running = true;
+        sleep(1000).then(() => {startTimer();})
     })
     const threePointer = document.getElementById("3_pointer");
     threePointer.addEventListener("click", (event) => {
-        running=false;
-        loadscript("/js/threepointer_signal.js");
         resetTheTimer();
+        running = true;
+        sleep(1000).then(() => {startTimer();})
     })
     const timeout = document.getElementById("time_out");
     timeout.addEventListener("click", (event) => {
@@ -32,14 +37,8 @@ const initapp = () => {
     })
     const startClock = document.getElementById("start_clock");
     startClock.addEventListener("click", (event) => {
-        startTimer(running);
-        if (running == true){
-            return; // already running
-        }
-        else{
-            running = true;
-            startTimer();
-        }
+        running = true;
+        startTimer();
     })
     const stopClock = document.getElementById("stop_clock");
     stopClock.addEventListener("click", (event) => {
@@ -57,6 +56,8 @@ const initapp = () => {
     })
 }
 
+
+
 const resetTheTimer = () => {
     stopTimer();
     var seconds = document.getElementById("seconds");
@@ -73,7 +74,7 @@ const startTimer = () => {
     if (secs==14){
         secs -= 1;
     }
-    var decisecs = secs*10 ;
+    var decisecs = secs*10 + 9;
     seconds.value = secs
     deciseconds.value = decisecs-((Math.floor(decisecs/10))*10);
     var secdec;
@@ -106,7 +107,6 @@ const startTimer = () => {
     }
     timer();
     // what happens when timer = 0
-     //?
 }
 
 const stopTimer = () => {
@@ -125,6 +125,4 @@ function loadscript(src){
 }
 
 function timeoutScript(){
-    color = [255,0,255];
-    loadscript("/js/timeout_signal.js");
 }
